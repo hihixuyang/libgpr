@@ -11,36 +11,36 @@ Installation
 To build from source:
 
 ```bash
-    sudo apt-get install gnuplot libz-dev
-    make
-    sudo make install
+sudo apt-get install gnuplot libz-dev
+make
+sudo make install
 ```
 
 This creates the library and installs it into /usr/local.  If you need to run the unit tests after installing as above:
 
 ```bash
-    make tests
-    ./libgpr_tests
+make tests
+./libgpr_tests
 ```
 
 Or to check for any memory leaks:
 
 ```bash
-    valgrind --leak-check=full ./libgpr_tests
+valgrind --leak-check=full ./libgpr_tests
 ```
 
 There are also some example programs within the libtest and libtest_cartesian directories, which can be built by running:
 
 ```bash
-    make ltest
-    ./libgpr
+make ltest
+./libgpr
 ```
 
 or
 
 ```bash
-    make ltestc
-    ./libgpr
+make ltestc
+./libgpr
 ```
 
 Usage
