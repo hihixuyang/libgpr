@@ -61,9 +61,6 @@ clean:
 	rm -f rpmpackage/*.src.rpm archpackage/*.gz archpackage/*.xz
 	rm -f puppypackage/*.gz puppypackage/*.pet slackpackage/*.txz
 
-sourcedeb:
-	tar -cvf ../${APP}_${VERSION}.orig.tar ../${APP}-${VERSION} --exclude-vcs --exclude 'debian'
-	gzip -f9n ../${APP}_${VERSION}.orig.tar
 tests:
 	gcc -Wall -std=c99 -pedantic -g -o $(APP)_tests unittests/*.c src/*.c -Isrc -Iunittests -lm -lz -fopenmp
 ltest:
