@@ -81,18 +81,18 @@ void gprcdeep_init(gprcdeep_function * f,
 
         /* initialise the layer */
         gprcm_init_system(&f->layer[i], islands,
-						  population_per_island,
-						  rows, columns,
-						  gprcdeep_layer_sensors(f, i),
-						  gprcdeep_layer_actuators(f, i),
-						  connections_per_gene,
-						  modules,
-						  chromosomes,
-						  min_value, max_value,
-						  integers_only,
-						  data_size, data_fields,
-						  &f->random_seed[i],
-						  instruction_set, no_of_instructions);
+                          population_per_island,
+                          rows, columns,
+                          gprcdeep_layer_sensors(f, i),
+                          gprcdeep_layer_actuators(f, i),
+                          connections_per_gene,
+                          modules,
+                          chromosomes,
+                          min_value, max_value,
+                          integers_only,
+                          data_size, data_fields,
+                          &f->random_seed[i],
+                          instruction_set, no_of_instructions);
     }
 }
 
@@ -105,8 +105,24 @@ void gprcdeep_free(gprcdeep_function * f)
     }
 }
 
-void gprcdeep_save(gprcdeep_function * f, char * filename)
+int gprcdeep_save(gprcdeep_function * f, char * filename)
 {
+    int i;
+    FILE * fp;
+
+    fp  =fopen(filename, "w");
+    if (!fp) return -1;
+
+    fprintf(fp, "%d\n", f->layers);
+    fprintf(fp, "%d\n", f->sensors);
+    fprintf(fp, "%d\n", f->actuators);
+
+    for (i = 0; i < f->layers; i++) {
+        fprintf(fp, "%u\n", f->random_seed[i]);
+        gprcm_save_system(&f->layer[i], fp);
+    }
+
+    fclose(fp);
 }
 
 void gprcdeep_load(gprcdeep_function * f, char * filename)

@@ -58,18 +58,6 @@ struct gprcdeep_func {
     /* number of sensors and actuators */
     int sensors, actuators;
 
-    /* sensors can be redirected to various other
-       sources (eg a larger input set).  This defines
-       what inputs are picked from a larger set. */
-    int no_of_sensor_sources;
-    int * sensor_source;
-
-    /* actuators can be redirected to various other
-       outputs (eg a larger output set).  This defines
-       what outputs are picked from a larger set. */
-    int no_of_actuator_destinations;
-    int * actuator_destination;
-
     /* random number seed */
     unsigned int random_seed[GPRCDEEP_MAX_LAYERS];
 };
@@ -83,7 +71,7 @@ void gprcdeep_init(gprcdeep_function * f,
                    int layers,
                    unsigned int random_seed);
 void gprcdeep_free(gprcdeep_function * f);
-void gprcdeep_save(gprcdeep_function * f, char * filename);
+int gprcdeep_save(gprcdeep_function * f, char * filename);
 void gprcdeep_load(gprcdeep_function * f, char * filename);
 
 #endif
