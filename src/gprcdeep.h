@@ -53,7 +53,7 @@ struct gprcdeep_func {
     int layers;
 
     /* each layer is a cartesian genetic programming system */
-    gprc_system layer[GPRCDEEP_MAX_LAYERS];
+    gprcm_system layer[GPRCDEEP_MAX_LAYERS];
 
     /* number of sensors and actuators */
     int sensors, actuators;
@@ -83,5 +83,7 @@ void gprcdeep_init(gprcdeep_function * f,
                    int layers,
                    unsigned int random_seed);
 void gprcdeep_free(gprcdeep_function * f);
+void gprcdeep_save(gprcdeep_function * f, char * filename);
+void gprcdeep_load(gprcdeep_function * f, char * filename);
 
 #endif

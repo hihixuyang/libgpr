@@ -80,19 +80,19 @@ void gprcdeep_init(gprcdeep_function * f,
         f->random_seed[i] = random_seed++;
 
         /* initialise the layer */
-        gprc_init_system(&f->layer[i], islands,
-                         population_per_island,
-                         rows, columns,
-                         gprcdeep_layer_sensors(f, i),
-                         gprcdeep_layer_actuators(f, i),
-                         connections_per_gene,
-                         modules,
-                         chromosomes,
-                         min_value, max_value,
-                         integers_only,
-                         data_size, data_fields,
-                         &f->random_seed[i],
-                         instruction_set, no_of_instructions);
+        gprcm_init_system(&f->layer[i], islands,
+						  population_per_island,
+						  rows, columns,
+						  gprcdeep_layer_sensors(f, i),
+						  gprcdeep_layer_actuators(f, i),
+						  connections_per_gene,
+						  modules,
+						  chromosomes,
+						  min_value, max_value,
+						  integers_only,
+						  data_size, data_fields,
+						  &f->random_seed[i],
+						  instruction_set, no_of_instructions);
     }
 }
 
@@ -101,6 +101,14 @@ void gprcdeep_free(gprcdeep_function * f)
     int i;
 
     for (i = 0; i < f->layers; i++) {
-        gprc_free_system(&f->layer[i]);
+        gprcm_free_system(&f->layer[i]);
     }
+}
+
+void gprcdeep_save(gprcdeep_function * f, char * filename)
+{
+}
+
+void gprcdeep_load(gprcdeep_function * f, char * filename)
+{
 }
