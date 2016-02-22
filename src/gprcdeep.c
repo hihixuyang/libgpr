@@ -29,6 +29,8 @@
 
 #include "gprcdeep.h"
 
+float dropout_rate = 0.2f;
+
 /* returns the number of sensors at the given layer */
 int gprcdeep_layer_sensors(gprcdeep_function * f, int layer)
 {
@@ -160,4 +162,76 @@ int gprcdeep_load(gprcdeep_function * f, char * filename)
     fclose(fp);
 
     return 0;
+}
+
+/*
+static float evaluate_features(int trials,
+							   gprcm_population * population,
+							   int individual_index,
+							   int custom_command)
+{
+	int i,j,classification,itt,c;
+	float diff=0,fitness,v,max;
+	gprcm_function * f = &population->individual[individual_index];
+
+	if (custom_command != 0) dropout_rate=0;
+
+	for (i = 0; i < trials; i++) {
+		gprcm_clear_state(f,
+			 			  population->rows, population->columns,
+						  population->sensors, population->actuators);
+
+		for (j = 0; j < fields_per_example - 1; j++) {
+			gprcm_set_sensor(f, j,
+			 	 			 current_data_set[i*fields_per_example+j]);
+		}
+
+		for (itt = 0; itt < RUN_STEPS; itt++) {
+			gprcm_run(f, population, dropout_rate, 0, 0);
+		}
+
+		classification =
+			(int)current_data_set[i*fields_per_example+
+								  fields_per_example-1];
+
+		max = -9999;
+		c = -1;
+		for (j = 1; j <= CATEGORIES; j++) {
+			v = gprcm_get_actuator(f, j,
+					 			   population->rows,
+								   population->columns,
+								   population->sensors);
+			if ((v > max) || (j == 1)) {
+				max = v;
+				c = j;
+			}
+		}
+		if (c != classification) diff += 1;
+	}
+	diff = (diff / trials)*100;
+	fitness = 100 - diff;
+	return fitness;
+}
+*/
+
+int gprcdeep_update(gprcdeep_function * f, int update_layers)
+{
+    int i;
+	int trials = 100;
+
+	for (i = 0; i < update_layers; i++) {
+		/* evaluate each individual */
+		/* gprc_evaluate_system(&f->layer[i],
+							 trials, 0,
+							 (*evaluate_features)); */
+
+		/* produce the next generation */
+		/* gprc_generation_system(&f->layer[i],
+							   migration_interval,
+							   elitism,
+							   mutation_prob,
+							   use_crossover, &f->random_seed[i],
+							   instruction_set, no_of_instructions); */
+
+	}
 }
