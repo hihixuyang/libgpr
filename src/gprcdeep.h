@@ -72,6 +72,6 @@ void gprcdeep_init(gprcdeep_function * f,
                    unsigned int random_seed);
 void gprcdeep_free(gprcdeep_function * f);
 int gprcdeep_save(gprcdeep_function * f, char * filename);
-void gprcdeep_load(gprcdeep_function * f, char * filename);
+int gprcdeep_load(gprcdeep_function * f, char * filename);
 
 #endif

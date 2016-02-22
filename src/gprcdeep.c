@@ -116,15 +116,48 @@ int gprcdeep_save(gprcdeep_function * f, char * filename)
     fprintf(fp, "%d\n", f->layers);
     fprintf(fp, "%d\n", f->sensors);
     fprintf(fp, "%d\n", f->actuators);
-
     for (i = 0; i < f->layers; i++) {
-        fprintf(fp, "%u\n", f->random_seed[i]);
         gprcm_save_system(&f->layer[i], fp);
     }
 
     fclose(fp);
+    return 0;
 }
 
-void gprcdeep_load(gprcdeep_function * f, char * filename)
+int gprcdeep_load(gprcdeep_function * f, char * filename)
 {
+    FILE * fp = fopen(filename, "r");
+    char line[256];
+    int i, sensors=0, actuators=0, layers=0;
+    int instruction_set[64], no_of_instructions=0;
+    if (!fp) return -1;
+
+    if (fgets(line, 255, fp) != NULL ) {
+        layers = atoi(line);
+    }
+    if (fgets(line, 255, fp) != NULL ) {
+        sensors = atoi(line);
+    }
+    if (fgets(line, 255, fp) != NULL ) {
+        actuators = atoi(line);
+    }
+    if (layers == 0) return -2;
+    if (sensors == 0) return -3;
+    if (actuators == 0) return -4;
+
+    /* create an instruction set */
+    no_of_instructions =
+        gprc_dynamic_instruction_set((int*)instruction_set);
+
+    gprcdeep_init(f, sensors, actuators,
+                  layers, (unsigned int)123);
+
+    for (i = 0; i < layers; i++) {
+        gprcm_load_system(&f->layer[i], fp,
+                          instruction_set, no_of_instructions);
+    }
+
+    fclose(fp);
+
+    return 0;
 }
