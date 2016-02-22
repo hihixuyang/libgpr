@@ -2,6 +2,11 @@
  libgpr - a library for genetic programming
  Copyright (C) 2016  Bob Mottram <bob@robotics.uk.to>
 
+ NOTE: a deep learning type of approach with autocoders is
+ on hold. This requires an evaluation function to invert every
+ individual in the population, and relative to an ANN that could
+ be quite slow.
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
