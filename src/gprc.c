@@ -1072,11 +1072,11 @@ void gprc_valid_ADFs(gprc_function * f,
                         f->genome[m].gene[n+GPRC_GENE_CONSTANT] =
                             ADF_module_index-1;
                         /*
-                        int argc = get_ADF_args(f, ADF_module_index);
-                        f->genome[m].gene[n+GPRC_INITIAL] = argc-1;
-                        if (f->genome[m].gene[n+GPRC_INITIAL] < 0) {
-                            f->genome[m].gene[n] = GPR_FUNCTION_VALUE;
-                        }
+                          int argc = get_ADF_args(f, ADF_module_index);
+                          f->genome[m].gene[n+GPRC_INITIAL] = argc-1;
+                          if (f->genome[m].gene[n+GPRC_INITIAL] < 0) {
+                          f->genome[m].gene[n] = GPR_FUNCTION_VALUE;
+                          }
                         */
                     }
                 }
@@ -2786,7 +2786,7 @@ void gprc_run_float(gprc_function * f,
             }
             case GPR_FUNCTION_EQUALS: {
                 if (((int)state[(int)gp[GPRC_INITIAL]] ==
-                    (int)state[(int)gp[1+GPRC_INITIAL]]) &&
+                     (int)state[(int)gp[1+GPRC_INITIAL]]) &&
                     ((int)state[(int)gp[GPRC_INITIAL]+no_of_states] ==
                      (int)state[(int)gp[1+GPRC_INITIAL]+no_of_states])) {
                     state[sens+i] = gp[GPRC_GENE_CONSTANT];
@@ -3476,7 +3476,7 @@ void gprc_run_int(gprc_function * f,
             }
             case GPR_FUNCTION_EQUALS: {
                 if (((int)state[(int)gp[GPRC_INITIAL]] ==
-                    (int)state[(int)gp[1+GPRC_INITIAL]]) &&
+                     (int)state[(int)gp[1+GPRC_INITIAL]]) &&
                     ((int)state[(int)gp[GPRC_INITIAL]+no_of_states] ==
                      (int)state[(int)gp[1+GPRC_INITIAL]+no_of_states])) {
                     state[sens+i] = (int)gp[GPRC_GENE_CONSTANT];
@@ -7017,7 +7017,7 @@ void gprc_arduino_base(int rows, int columns,
         }
         fprintf(fp,"state%d[%d];\n\n",m,
                 (gprc_get_sensors(m,sensors) +
-                (rows*columns) +
+                 (rows*columns) +
                  act)*2);
     }
 
@@ -7188,7 +7188,7 @@ void gprc_c_program_base(int rows, int columns,
         }
         fprintf(fp,"state%d[%d];\n\n",m,
                 (gprc_get_sensors(m,sensors) +
-                (rows*columns) +
+                 (rows*columns) +
                  act)*2);
     }
 

@@ -1,30 +1,30 @@
 /*
- libgpr - a library for genetic programming
- Copyright (C) 2016  Bob Mottram <bob@robotics.uk.to>
+  libgpr - a library for genetic programming
+  Copyright (C) 2016  Bob Mottram <bob@robotics.uk.to>
 
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in the
-    documentation and/or other materials provided with the distribution.
- 3. Neither the name of the University nor the names of its contributors
-    may be used to endorse or promote products derived from this software
-    without specific prior written permission.
- .
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE HOLDERS OR
- CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+  1. Redistributions of source code must retain the above copyright
+  notice, this list of conditions and the following disclaimer.
+  2. Redistributions in binary form must reproduce the above copyright
+  notice, this list of conditions and the following disclaimer in the
+  documentation and/or other materials provided with the distribution.
+  3. Neither the name of the University nor the names of its contributors
+  may be used to endorse or promote products derived from this software
+  without specific prior written permission.
+  .
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE HOLDERS OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "gprcdeep.h"
@@ -57,7 +57,6 @@ void gprcdeep_init(gprcdeep_function * f,
     int i;
     int islands = 4;
     int modules = 0;
-    int migration_interval = 200;
     int population_per_island = 64;
     int connections_per_gene = GPRC_MAX_ADF_MODULE_SENSORS+1;
     int chromosomes = 3;
@@ -165,73 +164,74 @@ int gprcdeep_load(gprcdeep_function * f, char * filename)
 }
 
 /*
-static float evaluate_features(int trials,
-							   gprcm_population * population,
-							   int individual_index,
-							   int custom_command)
-{
-	int i,j,classification,itt,c;
-	float diff=0,fitness,v,max;
-	gprcm_function * f = &population->individual[individual_index];
+  static float evaluate_features(int trials,
+  gprcm_population * population,
+  int individual_index,
+  int custom_command)
+  {
+  int i,j,classification,itt,c;
+  float diff=0,fitness,v,max;
+  gprcm_function * f = &population->individual[individual_index];
 
-	if (custom_command != 0) dropout_rate=0;
+  if (custom_command != 0) dropout_rate=0;
 
-	for (i = 0; i < trials; i++) {
-		gprcm_clear_state(f,
-			 			  population->rows, population->columns,
-						  population->sensors, population->actuators);
+  for (i = 0; i < trials; i++) {
+  gprcm_clear_state(f,
+  population->rows, population->columns,
+  population->sensors, population->actuators);
 
-		for (j = 0; j < fields_per_example - 1; j++) {
-			gprcm_set_sensor(f, j,
-			 	 			 current_data_set[i*fields_per_example+j]);
-		}
+  for (j = 0; j < fields_per_example - 1; j++) {
+  gprcm_set_sensor(f, j,
+  current_data_set[i*fields_per_example+j]);
+  }
 
-		for (itt = 0; itt < RUN_STEPS; itt++) {
-			gprcm_run(f, population, dropout_rate, 0, 0);
-		}
+  for (itt = 0; itt < RUN_STEPS; itt++) {
+  gprcm_run(f, population, dropout_rate, 0, 0);
+  }
 
-		classification =
-			(int)current_data_set[i*fields_per_example+
-								  fields_per_example-1];
+  classification =
+  (int)current_data_set[i*fields_per_example+
+  fields_per_example-1];
 
-		max = -9999;
-		c = -1;
-		for (j = 1; j <= CATEGORIES; j++) {
-			v = gprcm_get_actuator(f, j,
-					 			   population->rows,
-								   population->columns,
-								   population->sensors);
-			if ((v > max) || (j == 1)) {
-				max = v;
-				c = j;
-			}
-		}
-		if (c != classification) diff += 1;
-	}
-	diff = (diff / trials)*100;
-	fitness = 100 - diff;
-	return fitness;
-}
+  max = -9999;
+  c = -1;
+  for (j = 1; j <= CATEGORIES; j++) {
+  v = gprcm_get_actuator(f, j,
+  population->rows,
+  population->columns,
+  population->sensors);
+  if ((v > max) || (j == 1)) {
+  max = v;
+  c = j;
+  }
+  }
+  if (c != classification) diff += 1;
+  }
+  diff = (diff / trials)*100;
+  fitness = 100 - diff;
+  return fitness;
+  }
 */
 
 int gprcdeep_update(gprcdeep_function * f, int update_layers)
 {
     int i;
-	int trials = 100;
+    /*int trials = 100;*/
 
-	for (i = 0; i < update_layers; i++) {
-		/* evaluate each individual */
-		/* gprc_evaluate_system(&f->layer[i],
-							 trials, 0,
-							 (*evaluate_features)); */
+    for (i = 0; i < update_layers; i++) {
+        /* evaluate each individual */
+        /* gprc_evaluate_system(&f->layer[i],
+           trials, 0,
+           (*evaluate_features)); */
 
-		/* produce the next generation */
-		/* gprc_generation_system(&f->layer[i],
-							   migration_interval,
-							   elitism,
-							   mutation_prob,
-							   use_crossover, &f->random_seed[i],
-							   instruction_set, no_of_instructions); */
+        /* produce the next generation */
+        /* gprc_generation_system(&f->layer[i],
+           migration_interval,
+           elitism,
+           mutation_prob,
+           use_crossover, &f->random_seed[i],
+           instruction_set, no_of_instructions); */
 
-	}
+    }
+	return 0;
 }
